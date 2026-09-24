@@ -36,10 +36,12 @@ export default function LoadingScreen({ onComplete }) {
 
   // Generate ASCII progress bar
   const totalBlocks = 20;
-  const filledBlocks = Math.floor((progress / 100) * totalBlocks);
-  const emptyBlocks = totalBlocks - filledBlocks;
-  const progressBarAscii = `[${"█".repeat(filledBlocks)}${"░".repeat(emptyBlocks)}]`;
-
+ const filledBlocks = Math.max(
+  0,
+  Math.min(totalBlocks, Math.floor((progress / 100) * totalBlocks))
+);
+const emptyBlocks = Math.max(0, totalBlocks - filledBlocks);
+const progressBarAscii = `[${"█".repeat(filledBlocks)}${"░".repeat(emptyBlocks)}]`;
   return (
     <AnimatePresence>
       {!isFinished && (
